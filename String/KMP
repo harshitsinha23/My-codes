@@ -1,0 +1,84 @@
+#include<bits/stdc++.h>
+#define int long long int
+#define inf 100000000000000
+#define IOS ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+using namespace std;
+int mod=1000000007;
+
+bool KMP(string text, string pat, int PatternArray[])
+{
+    int i=0;
+    int j=0;
+    int f=0;
+    while(i<text.size() && j<pat.size())
+    {
+        if(pat[j]==text[i])
+        {
+            i++;
+            j++;
+        }
+        else
+        {
+            if(j==0)
+            {
+                i++;
+            }
+            else
+            {
+                j=PatternArray[j-1];
+            }
+
+        }
+
+    }
+    if(j==pat.size())
+    {
+        return true;
+
+    }
+    return false;
+}
+
+int32_t main()
+{
+    string text="ABABDABACDABABCABAB";
+    string pat="ABABCABAB";
+    int n=text.size();
+    int m=pat.size();
+
+    int PatternArray[m+1]={0};
+
+    int i=1,j=0;
+
+    while(i<m)
+    {
+      // cout<<pat[i]<<" "<<pat[j]<<endl;
+        if(pat[i]==pat[j])
+        {
+            PatternArray[i]=j+1;
+            i++;
+            j++;
+        }
+        else
+        {
+            if(j==0)
+            {
+                PatternArray[i]=0;
+                i++;
+            }
+            else
+            {
+                j=PatternArray[j-1];
+            }
+
+        }
+
+
+    }
+
+
+    cout<<KMP(text,pat,PatternArray);
+
+
+
+}
