@@ -1,0 +1,81 @@
+#include<bits/stdc++.h>
+#define int long long int
+#define inf 100000000000000
+#define IOS ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+using namespace std;
+int mod=1000000007;
+vector<int> graph[100005];
+const int n=5;
+
+void graphcolor()
+{
+    int color[n];
+    for(int i=0;i<n;i++)
+    {
+        color[i]=-1;
+    }
+    color[0]=0;
+    int available[n]={0};
+    for(int i=1;i<n;i++)
+    {
+
+        for(int j=0;j<graph[i].size();j++)
+        {
+            if(color[graph[i][j]]!=-1)
+            {
+                available[color[graph[i][j]]]=1;
+            }
+
+        }
+
+        int k=0;
+        for(k=0;k<n;k++)
+        {
+            if(available[k]==0)
+            {
+                break;
+            }
+        }
+
+
+        color[i]=k;
+        for(int j=0;j<graph[i].size();j++)
+        {
+            if(color[graph[i][j]]!=-1)
+            {
+                available[color[graph[i][j]]]=0;
+            }
+
+        }
+
+    }
+
+
+    for(int i=0;i<n;i++)
+    {
+        cout<<i<<"-->"<<color[i]<<endl;
+    }
+}
+
+
+int32_t main()
+{
+    graph[0].push_back(1);
+    graph[0].push_back(2);
+    graph[1].push_back(2);
+    graph[1].push_back(3);
+    graph[2].push_back(3);
+    graph[3].push_back(4);
+    graph[1].push_back(0);
+    graph[2].push_back(0);
+    graph[2].push_back(1);
+    graph[3].push_back(1);
+    graph[3].push_back(2);
+    graph[4].push_back(3);
+
+
+
+    graphcolor();
+
+
+}
