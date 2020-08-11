@@ -1,0 +1,56 @@
+#include<bits/stdc++.h>
+#define int long long int
+#define inf 100000000000000
+#define IOS ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+using namespace std;
+int mod=1000000007;
+const int n = 4;
+int path[n+1]={-1};
+bool hamiltonialcycle(int graph[][n],int visited[],int pos)
+{
+    if(pos==n)
+    {
+        if(graph[path[n-1]][0])
+        {
+            for(int i=0;i<n;i++)
+            {
+                cout<<path[i]<<" ";
+            }
+            cout<<endl;
+            return true;
+        }
+        return false;
+    }
+
+    for(int i=0;i<n;i++)
+    {
+        if(graph[path[pos-1]][i] && visited[i]==0)
+        {
+            path[pos]=i;
+            visited[i]=1;
+            if(hamiltonialcycle(graph,visited,pos+1))
+            {
+                return true;
+            }
+            path[pos]=-1;
+            visited[i]=0;
+        }
+    }
+    return false;
+}
+
+int32_t main()
+{
+    int graph[][n] = {
+        { 0, 10, 15, 20 },
+        { 10, 0, 35, 25 },
+        { 15, 35, 0, 30 },
+        { 20, 25, 30, 0 }
+    };
+
+    int visited[n+1]={0};
+    path[0]=0;
+    visited[0]=1;
+    cout<<hamiltonialcycle(graph,visited,1);
+
+}
