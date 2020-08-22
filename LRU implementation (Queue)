@@ -1,0 +1,60 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+void PrintFinalLRU(int pages[],int capacity,int n)
+{
+	queue<int> frames;
+	unordered_map<int,int> mp;
+	
+	for(int i=0;i<n;i++)
+	{
+		if(frames.size()<capacity)
+		{
+			frames.push(pages[i]);
+			mp[pages[i]] = 1;
+		}
+		else
+		{
+			if(mp.find(pages[i])==mp.end())
+			{
+				frames.pop();
+				frames.push(pages[i]);
+			}	
+			else
+			{
+				queue<int> temp;
+				while(!frames.empty())
+				{
+					int a=frames.front();
+					frames.pop();
+					if(a!=pages[i])
+					{
+						temp.push(a);
+					}
+				}
+				while(!temp.empty())
+				{
+					int b=temp.front();
+					temp.pop();
+					frames.push(b);
+				}
+				frames.push(pages[i]);
+			}
+		}
+	}
+
+	while(!frames.empty())
+	{
+		cout<<frames.front()<<" ";
+		frames.pop();
+	}
+}
+
+int main()
+{
+	int capacity = 4;
+	int pages[]={1,2,3,1,4,5,3};
+	int n = sizeof(pages)/sizeof(pages[0]);
+
+	PrintFinalLRU(pages,capacity,n);
+}
